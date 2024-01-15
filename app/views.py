@@ -39,6 +39,7 @@ def view_cart(request):
         items = []
         cart = {'get_cart_items': 0, 'get_cart_total': 0}
         cart_items = cart['get_cart_items']
+        count_items = 0
         user_notlogin = "hidden"
         user_login = "show"
 
@@ -74,6 +75,7 @@ def index(request):
         items = []
         cart = {'get_cart_items': 0, 'get_cart_total': 0}
         cart_items = cart['get_cart_items']
+        count_items = 0
         user_notlogin = "show"
         user_login = "hidden"
     categories = Category.objects.filter(is_sub=False)
@@ -159,6 +161,7 @@ def detail(request):
         items = []
         cart = {'get_cart_items': 0, 'get_cart_total': 0}
         cart_items = cart['get_cart_items']
+        count_items = 0
         user_notlogin = "show"
         user_login = "hidden"
     id = request.GET.get('id', '')
