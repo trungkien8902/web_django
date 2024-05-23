@@ -5,9 +5,37 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from .models import Product, Cart, CartItem
+from .models import Product, Cart, CartItem, Profile
 from django.contrib.auth.decorators import login_required
+from .forms import UserForm, ProfileForm
 
+#views.py
+@login_required
+def profile(request):
+    return render(request, 'app/profile.html')
+
+@login_required
+def edit_profile(request):
+    try:
+        profile = request.user.profile
+    except Profile.DoesNotExist:
+        profile = Profile.objects.create(user=request.user)
+    
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('profile')
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=profile)
+    
+    return render(request, 'app/edit_profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
 @login_required
 def add_to_cart(request, product_id):
     if request.user.is_authenticated:

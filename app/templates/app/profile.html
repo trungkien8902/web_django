@@ -1,0 +1,13 @@
+<!-- templates/profile.html -->
+{% extends 'app/base.html' %}
+
+{% block content %}
+  <h2>Profile</h2>
+  <p>Username: {{ request.user.username }}</p>
+  <p>First name: {{ request.user.first_name }}</p>
+  <p>Last name: {{ request.user.last_name }}</p>
+  <p>Email: {{ request.user.email }}</p>
+  <p>Bio: {{ request.user.profile.bio }}</p>
+  <p>Location: {{ request.user.profile.location }}</p>
+  <p>Birth date: {{ request.user.profile.birth_date }}</p>
+{% endblock %}
